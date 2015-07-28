@@ -1,0 +1,168 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="CodeCharm.Windows.AuditFramework.MainWindow"
+        SnapsToDevicePixels="True"
+        Title="MainWindow"
+        Height="600"
+        Width="800">
+    <Window.CommandBindings>
+        <CommandBinding Command="Open"
+                        Executed="OpenCommand_Executed"
+                        CanExecute="OpenCommand_CanExecute" />
+        <CommandBinding Command="Close"
+                        Executed="CloseCommand_Executed"
+                        PreviewCanExecute="CommandBinding_PreviewCanExecute" />
+        <CommandBinding Command="Search"
+                        Executed="SearchCommand_Executed"
+                        PreviewCanExecute="SearchCommand_CanExecute" />
+    </Window.CommandBindings>
+    <DockPanel>
+        <StackPanel Orientation="Horizontal"
+                    DockPanel.Dock="Bottom"
+                    HorizontalAlignment="Right">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin"
+                            Value="12" />
+                    <Setter Property="Padding"
+                            Value="4" />
+                </Style>
+            </StackPanel.Resources>
+            <Button IsDefault="True"
+                    Command="Open"
+                    Content="Deploy" />
+            <Button IsCancel="True"
+                    Command="ApplicationCommands.Close"
+                    IsEnabled="True"
+                    Content="Close" />
+        </StackPanel>
+        <ScrollViewer>
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style x:Key="CaptionStyle"
+                           TargetType="{x:Type TextBlock}">
+                        <Setter Property="HorizontalAlignment"
+                                Value="Left" />
+                        <Setter Property="VerticalAlignment"
+                                Value="Top" />
+                        <Setter Property="Margin"
+                                Value="12" />
+                        <Setter Property="TextWrapping"
+                                Value="Wrap" />
+                        <Setter Property="MinHeight"
+                                Value="16" />
+                        <Setter Property="Width"
+                                Value="200" />
+                    </Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Margin"
+                                Value="12" />
+                        <Setter Property="Grid.Column"
+                                Value="1" />
+                    </Style>
+                    <Style TargetType="{x:Type CheckBox}">
+                        <Setter Property="Margin"
+                                Value="12" />
+                        <Setter Property="Grid.Column"
+                                Value="1" />
+                    </Style>
+                </StackPanel.Resources>
+                <DockPanel>
+                    <TextBlock Text="Connection String"
+                               Style="{DynamicResource CaptionStyle}" />
+                    <TextBox x:Name="ConnectionStringTextBox"
+                             Height="32" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Audit Table Format"
+                               Style="{DynamicResource CaptionStyle}" />
+                    <TextBox Text="{}{AuditedSchema}º{TableName}"
+                             x:Name="AuditTableFormatTextBox" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Always Recreate Auditing Framework"
+                               Style="{DynamicResource CaptionStyle}" />
+                    <CheckBox Content="Always recreate"
+                              x:Name="AlwaysRecreateCheckBox" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Auditing File Group"
+                               Style="{DynamicResource CaptionStyle}" />
+                    <TextBox Text="AUDIT"
+                             x:Name="AuditingFileGroupTextBox" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Remove All Auditing"
+                               Style="{DynamicResource CaptionStyle}" />
+                    <CheckBox Content="Remove All"
+                              x:Name="RemoveAllCheckBox"
+                              IsThreeState="False" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Automatically Deploy to Database"
+                               Style="{DynamicResource CaptionStyle}" />
+                    <CheckBox Content="Automatically Deploy"
+                              x:Name="AutomaticallyDeployCheckBox" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Output Path"
+                               Style="{DynamicResource CaptionStyle}" />
+                    <DockPanel>
+                        <Button Margin="0,12,12,12"
+                                Content="…"
+                                Command="Search"
+                                DockPanel.Dock="Right" />
+                        <TextBox HorizontalAlignment="Stretch"
+                                 x:Name="OutputPathTextBox" />
+                    </DockPanel>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Auditing Schema"
+                               Style="{DynamicResource CaptionStyle}" />
+                    <TextBox Text="db_audit"
+                             x:Name="AuditingSchemaTextBox" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Match by Primary Keys"
+                               Style="{DynamicResource CaptionStyle}" />
+                    <CheckBox Content="Match by Primary Keys"
+                              x:Name="MatchByPrimaryKeysCheckBox" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Schemas to Audit (space-separated list)"
+                               Style="{DynamicResource CaptionStyle}" />
+                    <TextBox Text="dbo"
+                             x:Name="SchemasToAuditTextBox" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Generate baseline records"
+                               Style="{DynamicResource CaptionStyle}" />
+                    <CheckBox Content="Generate baseline"
+                              x:Name="GenerateBaselineCheckBox"
+                              IsThreeState="False" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Grant EXECUTE to principals (space-separated list)"
+                               Style="{DynamicResource CaptionStyle}" />
+                    <TextBox Text="ProcExec"
+                             x:Name="ExecuteGranteesTextBox" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Skip auditing for tables (space-separated list)"
+                               Style="{DynamicResource CaptionStyle}" />
+                    <TextBox Text=""
+                             x:Name="TablesNotAuditedTextBox" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Skip auditing for columns (space-separated list)"
+                               Style="{DynamicResource CaptionStyle}" />
+                    <TextBox Text=""
+                             x:Name="ColumnsNotAuditedTextBox" />
+                </DockPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

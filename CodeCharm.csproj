@@ -1,0 +1,72 @@
+<Project DefaultTargets="Build"
+         xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+
+        <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+        <DelaySign>false</DelaySign>
+        <ErrorReport>prompt</ErrorReport>
+        <FileAlignment>4096</FileAlignment>
+        <FileUpgradeFlags/>
+        <NoStdLib>false</NoStdLib>
+        <NoWarn>1607,1591</NoWarn>
+        <OldToolsVersion>4.0</OldToolsVersion>
+        <RegisterForComInterop>false</RegisterForComInterop>
+        <RemoveIntegerChecks>false</RemoveIntegerChecks>
+        <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+        <TargetFrameworkProfile />
+        <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <UpgradeBackupLocation />
+        <WarningLevel>4</WarningLevel>
+
+        <DefaultClientScript>JScript</DefaultClientScript>
+        <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+        <DefaultTargetSchema>IE50</DefaultTargetSchema>
+
+    </PropertyGroup>
+
+    <!-- Non-optimized, with debug symbols, etc -->
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <DefineConstants>TRACE;DEBUG</DefineConstants>
+        <Optimize>false</Optimize>
+    </PropertyGroup>
+
+    <!-- Optimized, without debug symbols, etc -->
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>pdbonly</DebugType>
+        <DefineConstants>TRACE</DefineConstants>
+        <Optimize>true</Optimize>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Reference Include="System" />
+        <Reference Include="System.Data" />
+        <Reference Include="System.Xml" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <CodeAnalysisDictionary Include="..\..\..\Static Analysis Tools\CustomDictionary.xml">
+            <Link>Properties\CustomDictionary.xml</Link>
+        </CodeAnalysisDictionary>
+        <Compile Include="..\CodeCharm.AssemblyInfo.cs">
+            <Link>Properties\CodeCharm.AssemblyInfo.cs</Link>
+            <SubType>Code</SubType>
+        </Compile>
+    </ItemGroup>
+    <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

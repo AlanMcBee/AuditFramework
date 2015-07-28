@@ -1,0 +1,19 @@
+﻿<Window x:Class="CodeCharm.Windows.AuditFramework.SqlWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SqlWindow"
+        Width="1024"
+        Height="800">
+    <Grid>
+        <TextBox x:Name="SqlTextBox"
+                 IsReadOnly="True"
+                 TextWrapping="Wrap"
+                 IsReadOnlyCaretVisible="True"
+                 IsUndoEnabled="False"
+                 Height="772"
+                 Width="1016"
+                 VerticalScrollBarVisibility="Auto"
+                 HorizontalScrollBarVisibility="Auto" />
+
+    </Grid>
+</Window>

@@ -1,0 +1,45 @@
+﻿<#@ template language="C#" #>
+IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[<#= _params.AuditingSchema #>].[AuditMaster]') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+BEGIN
+    CREATE TABLE [<#= _params.AuditingSchema #>].[AuditMaster]
+        (
+          [ServerId]                SYSNAME             NOT NULL
+        , [TransactionSequence]     BIGINT              NOT NULL
+        , [TransactionDepth]        INT                 NOT NULL
+        , [Action]                  NCHAR(1)            NOT NULL
+        , [AuditedTableName]        SYSNAME             NOT NULL
+        , [TrackTableVersionName]   SYSNAME             NOT NULL
+        , [TrackºId]                BIGINT              IDENTITY(1, 1) NOT NULL
+        , [TimestampUtc]            DATETIME            NOT NULL
+        , [ConnectionUserId]        SYSNAME             NOT NULL
+        , [DesignatedUserId]        SYSNAME             NULL
+        , [PriorTrackºId]           BIGINT              NULL
+		, [AnyDelta]				BIT					NULL
+        
+        , CONSTRAINT [PK_AuditMaster_TrackºId] PRIMARY KEY CLUSTERED 
+            (
+                [TrackºId] ASC
+            )
+            ON [<#= _params.AuditingFileGroup #>]
+        ) 
+        ON [<#= _params.AuditingFileGroup #>]
+END
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[<#= _params.AuditingSchema #>].[AuditMaster]') AND name = N'IX_AuditMaster')
+BEGIN
+    CREATE NONCLUSTERED INDEX [IX_AuditMaster] ON [<#= _params.AuditingSchema #>].[AuditMaster]
+        (
+          TransactionSequence
+        , TrackºId
+        ) 
+        WITH
+        ( 
+          STATISTICS_NORECOMPUTE = OFF
+        , IGNORE_DUP_KEY = OFF
+        , ALLOW_ROW_LOCKS = ON
+        , ALLOW_PAGE_LOCKS = ON
+        ) 
+        ON [<#= _params.AuditingFileGroup #>]
+
+END
+GO

@@ -1,0 +1,35 @@
+﻿<#@ template language="C#" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Specialized" #>
+<#@ import namespace="CodeCharm.Entity.AuditFramework" #>
+
+IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[<#= _params.AuditingSchema #>].[<#= _deltaTableName #>]') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+BEGIN
+    CREATE TABLE [<#= _params.AuditingSchema #>].[<#= _deltaTableName #>]
+        (
+          [TrackºId] [bigint]
+<# foreach (SchemaDataSet.ColumnsRow columnsRow in _targetTableColumns) { #>
+        , [<#= columnsRow.COLUMN_NAME #>] BIT NOT NULL
+<# } #>
+
+        , CONSTRAINT [PK_<#= _deltaTableName #>_TrackºId] PRIMARY KEY CLUSTERED 
+            (
+                [TrackºId] ASC
+            )
+            ON [<#= _params.AuditingFileGroup #>]
+            
+        , CONSTRAINT [FK_<#= _deltaTableName #>_AuditMaster] FOREIGN KEY
+            (
+                [TrackºId]
+            ) 
+            REFERENCES [<#= _params.AuditingSchema #>].[AuditMaster]
+            (
+                [TrackºId]
+            ) 
+            ON UPDATE CASCADE 
+            ON DELETE CASCADE    
+        )
+        ON [<#= _params.AuditingFileGroup #>]
+END
+GO

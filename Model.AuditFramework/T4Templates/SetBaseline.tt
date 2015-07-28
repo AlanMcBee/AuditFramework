@@ -1,0 +1,197 @@
+﻿<#@ template language="C#" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="CodeCharm.Entity.AuditFramework" #>
+
+<# 
+SchemaDataSet schemaDataSet = _params.SchemaDataSet;
+SchemaDataSet.SchemaPrimaryKeysDataTable primaryKeysTable = schemaDataSet.SchemaPrimaryKeys;
+EnumerableRowCollection<SchemaDataSet.SchemaPrimaryKeysRow> primaryKeysRows = primaryKeysTable.AsEnumerable();
+var primaryKeysQuery = from primaryKeysRow in primaryKeysRows
+                       where primaryKeysRow.TABLE_SCHEMA.Equals(_schema, StringComparison.OrdinalIgnoreCase)
+                       where primaryKeysRow.TABLE_NAME.Equals(_tableName, StringComparison.OrdinalIgnoreCase)
+                       select primaryKeysRow;
+#>
+
+SET NOCOUNT ON;
+
+BEGIN TRY
+	BEGIN TRANSACTION;
+	SAVE TRANSACTION <#= _schema #>º<#= _tableName #>;
+
+	DECLARE @TrackºId 					[BIGINT];
+	DECLARE @AuditºTimeStampUtc 		[DATETIME];
+	DECLARE @AuditºTransactionSequence  [BIGINT];
+	DECLARE @AuditºTransactionDepth     [INT];
+	DECLARE @BaselineºCounter 			[BIGINT];
+
+	EXECUTE [<#= _params.AuditingSchema #>].[RequestTransactionSequence] 
+		  NULL
+		, @AuditºTransactionSequence OUTPUT
+		, @AuditºTransactionDepth OUTPUT;
+
+	SET @BaselineºCounter = 0;
+
+	<# foreach (SchemaDataSet.SchemaPrimaryKeysRow primaryKeysRow in primaryKeysQuery)
+	{   #>
+	DECLARE @PKº<#= primaryKeysRow.COLUMN_NAME #> <#= SchemaHelper.DataTypeWithDetail(primaryKeysRow, schemaDataSet.Columns) #>;
+	<# 
+	}   #>
+
+	<# 
+	string cursorName = string.Format("{0}º{1}ºCursor", _schema, _tableName);
+	#>
+	DECLARE <#= cursorName #> CURSOR LOCAL
+		FAST_FORWARD
+		FOR	SELECT
+	<# 
+	bool first = true;
+	foreach (SchemaDataSet.SchemaPrimaryKeysRow primaryKeysRow in primaryKeysQuery)
+	{
+		if (!first) 
+		{
+			Write(", ");
+		} 
+		Write("[" + primaryKeysRow.COLUMN_NAME + "]");
+		first = false;
+	} #>
+			FROM	[<#= _schema #>].[<#= _tableName #>];
+
+	OPEN 	<#= cursorName #>;
+
+	FETCH NEXT FROM <#= cursorName #>
+		INTO <# 
+	first = true;
+	foreach (SchemaDataSet.SchemaPrimaryKeysRow primaryKeysRow in primaryKeysQuery)
+		{
+			if (!first) 
+			{
+				Write(", ");
+			} 
+			Write("@PKº" + primaryKeysRow.COLUMN_NAME);
+			first = false;
+		} #>;
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+
+		EXECUTE [<#= _params.AuditingSchema #>].[Trackº<#= _schema #>º<#= _tableName #>]
+		  @AuditºTransactionSequence = @AuditºTransactionSequence
+		, @AuditºTransactionDepth = @AuditºTransactionDepth
+		, @AuditºAction = 'B'
+		, @TrackºId = @TrackºId OUTPUT
+		, @AuditºTimeStampUtc = NULL
+		, @AuditºDesignatedUserId = NULL
+	<# foreach (SchemaDataSet.SchemaPrimaryKeysRow primaryKeysRow in primaryKeysQuery)
+	{   #>
+		, @<#= primaryKeysRow.COLUMN_NAME #> = @PKº<#= primaryKeysRow.COLUMN_NAME #>
+	<# 
+	}   #>		;
+	
+		INSERT  [<#= _params.AuditingSchema #>].[<#= _trackingTable.ToString() #>Δ]
+        (
+          [TrackºId]
+<# 
+foreach (SchemaDataSet.ColumnsRow targetColumn in _targetTableColumns)
+{   #>
+        , [<#= targetColumn.COLUMN_NAME #>]
+<#
+}   #>          
+        )
+        VALUES
+        (
+          @TrackºId
+<# 
+foreach (SchemaDataSet.ColumnsRow targetColumn in _targetTableColumns)
+{   #>
+        , 0
+<#
+}   #>          
+        );
+
+		SET @BaselineºCounter = @BaselineºCounter + 1;
+		IF @BaselineºCounter % 1000 = 0
+		BEGIN
+			PRINT (CAST(@BaselineºCounter AS [NVARCHAR](16)));
+		END
+		
+		FETCH NEXT FROM <#= cursorName #>
+			INTO <# 
+	first = true;
+	foreach (SchemaDataSet.SchemaPrimaryKeysRow primaryKeysRow in primaryKeysQuery)
+		{
+			if (!first) 
+			{
+				Write(", ");
+			} 
+			Write("@PKº" + primaryKeysRow.COLUMN_NAME);
+			first = false;
+		}
+	#>;
+
+	END;
+
+	CLOSE	<#= cursorName #>;
+	DEALLOCATE	<#= cursorName #>;
+
+	UPDATE	[<#= _params.AuditingSchema #>].[AuditMaster]
+		SET	[PriorTrackºId] = [TrackºId]
+		WHERE	[Action] = 'B'
+			AND	[TrackTableVersionName] = '<#= _trackingTable.ToString() #>';
+
+	COMMIT TRANSACTION;
+
+	EXECUTE [<#= _params.AuditingSchema #>].[ReleaseTransactionSequence] 
+		  @AuditºTransactionSequence
+		, @AuditºTransactionDepth;
+
+	PRINT (CAST(@BaselineºCounter AS [NVARCHAR](16)) + ' records baselined');
+END TRY
+BEGIN CATCH
+    DECLARE	  @ErrorMessage    NVARCHAR(4000)
+		  	, @ErrorNumber     INT
+			, @ErrorSeverity   INT
+			, @ErrorState      INT
+			, @ErrorLine       INT
+			, @ErrorProcedure  NVARCHAR(200);
+
+    -- Assign variables to error-handling functions that 
+    -- capture information for RAISERROR.
+    SELECT	  @ErrorNumber = ERROR_NUMBER()
+			, @ErrorSeverity = ERROR_SEVERITY()
+			, @ErrorState = ERROR_STATE()
+			, @ErrorLine = ERROR_LINE()
+			, @ErrorProcedure = ISNULL(ERROR_PROCEDURE(), '-');
+
+	IF XACT_STATE() = -1 -- uncommittable
+	BEGIN
+		ROLLBACK TRANSACTION <#= _params.AuditingSchema #>ºBuildDelta;
+	END;
+	
+	IF XACT_STATE() = 1 -- committable
+	BEGIN
+		COMMIT TRANSACTION;
+	END;
+	
+    -- Build the message string that will contain original
+    -- error information.
+    SELECT @ErrorMessage = N'Error %d, Level %d, State %d, Procedure %s, Line %d, Message: '+ ERROR_MESSAGE();
+	
+	IF @ErrorState = 0
+		SET @ErrorState = 1;
+
+    -- Raise an error: msg_str parameter of RAISERROR will contain
+    -- the original error information.
+    RAISERROR 
+        (
+          @ErrorMessage 
+        , @ErrorSeverity 
+        , 1               
+        , @ErrorNumber    	-- parameter: original error number.
+        , @ErrorSeverity  	-- parameter: original error severity.
+        , @ErrorState     	-- parameter: original error state.
+        , @ErrorProcedure 	-- parameter: original error procedure name.
+        , @ErrorLine       	-- parameter: original error line number.
+        );
+
+END CATCH;
+GO

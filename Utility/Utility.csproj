@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <AssemblyName>Utility</AssemblyName>
+    <OutputType>Library</OutputType>
+    <ProjectGuid>{69CCD154-3F5C-48CD-9181-5F3669579AA6}</ProjectGuid>
+    <RootNamespace>CodeCharm.Utility</RootNamespace>
+    <SignAssembly>false</SignAssembly>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\Solutions\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Build.cs" />
+    <Compile Include="BuildConfiguration.cs" />
+    <Compile Include="ColorPalette.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="SystemDateTimeHelper.cs" />
+    <Compile Include="SystemEventHelper.cs" />
+    <Compile Include="SystemFlagsHelper.cs" />
+    <Compile Include="SystemGuidHelper.cs" />
+    <Compile Include="SystemReflectionHelper.cs" />
+    <Compile Include="SystemStringHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SystemTimeSpanHelper.cs" />
+    <Compile Include="SystemValueHelper.cs" />
+    <Compile Include="SystemXmlHelper.cs" />
+    <Compile Include="Iso8601Duration.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="..\CodeCharm.Foundation.csproj" />
+  <PropertyGroup>
+    <PostBuildEvent />
+  </PropertyGroup>
+</Project>

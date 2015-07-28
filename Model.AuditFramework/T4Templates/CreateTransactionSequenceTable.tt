@@ -1,0 +1,16 @@
+﻿<#@ template language="C#" #>
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= _params.AuditingSchema #>].[TransactionSequence]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [<#= _params.AuditingSchema #>].[TransactionSequence]
+        (
+          [TransactionSequence] [bigint] IDENTITY(1, 1) NOT NULL
+        
+        , CONSTRAINT [PK_TransactionSequence] PRIMARY KEY CLUSTERED 
+            (
+              [TransactionSequence] ASC
+            ) 
+            ON [<#= _params.AuditingFileGroup #>]
+        ) 
+        ON [<#= _params.AuditingFileGroup #>];
+END
+GO

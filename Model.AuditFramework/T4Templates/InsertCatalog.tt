@@ -1,0 +1,31 @@
+﻿<#@ template language="C#" #>
+IF NOT EXISTS   (SELECT Id FROM [<#= _auditSchema #>].[Catalog]
+                    WHERE   [AuditedSchema] = '<#= _schema #>'
+                        AND [AuditedTableName] = '<#= _tableName #>'
+                        AND [Version] = <#= _version #>
+                )
+BEGIN
+    UPDATE [<#= _auditSchema #>].[Catalog]
+        SET   [Archived] = 1
+        WHERE   [AuditedSchema] = '<#= _schema #>'
+            AND [AuditedTableName] = '<#= _tableName #>'
+            AND [Version] < <#= _version #>;
+        
+    INSERT [<#= _auditSchema #>].[Catalog]
+    (
+        [AuditedSchema]
+      , [AuditedTableName]
+      , [Version]
+      , [AuditingTableName]
+      , [Archived]
+    )
+    VALUES
+    (
+        '<#= _schema #>'
+      , '<#= _tableName #>'
+      , <#= _version #>
+      , '<#= _trackingTableName #>'
+      , 0
+    );
+END;
+GO

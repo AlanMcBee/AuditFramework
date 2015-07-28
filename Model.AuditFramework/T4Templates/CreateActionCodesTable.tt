@@ -1,0 +1,54 @@
+﻿<#@ template language="C#" #>
+IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[<#= _params.AuditingSchema #>].[ActionCodes]') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+BEGIN
+    CREATE TABLE [<#= _params.AuditingSchema #>].[ActionCodes]
+    (
+      [ActionCode] [nchar](1) NOT NULL
+    , [Description] [nvarchar](16) NOT NULL
+    
+    , CONSTRAINT [PK_ActionCodes] PRIMARY KEY CLUSTERED 
+        (
+          [ActionCode] ASC
+        ) 
+        ON [<#= _params.AuditingFileGroup #>]
+    ) 
+    ON [<#= _params.AuditingFileGroup #>]
+END
+
+IF NOT EXISTS ( SELECT [ActionCode] 
+                    FROM    [<#= _params.AuditingSchema #>].[ActionCodes] 
+                    WHERE   [ActionCode] = 'B'
+              )
+    INSERT INTO [<#= _params.AuditingSchema #>].[ActionCodes] 
+        ([ActionCode], [Description])
+        VALUES
+        (N'B', N'Baseline')
+
+IF NOT EXISTS ( SELECT [ActionCode] 
+                    FROM    [<#= _params.AuditingSchema #>].[ActionCodes] 
+                    WHERE   [ActionCode] = 'D'
+              )
+    INSERT INTO [<#= _params.AuditingSchema #>].[ActionCodes] 
+        ([ActionCode], [Description])
+        VALUES
+        (N'D', N'Deleted')
+
+IF NOT EXISTS ( SELECT [ActionCode] 
+                    FROM    [<#= _params.AuditingSchema #>].[ActionCodes] 
+                    WHERE   [ActionCode] = 'I'
+              )
+    INSERT INTO [<#= _params.AuditingSchema #>].[ActionCodes] 
+        ([ActionCode], [Description])
+        VALUES
+        (N'I', N'Inserted')
+
+IF NOT EXISTS ( SELECT [ActionCode] 
+                    FROM    [<#= _params.AuditingSchema #>].[ActionCodes] 
+                    WHERE   [ActionCode] = 'U'
+              )
+    INSERT INTO [<#= _params.AuditingSchema #>].[ActionCodes] 
+        ([ActionCode], [Description])
+        VALUES
+        (N'U', N'Updated')
+
+GO

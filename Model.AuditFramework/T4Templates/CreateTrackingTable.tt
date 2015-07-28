@@ -1,0 +1,79 @@
+﻿<#@ template language="C#" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Specialized" #>
+<#@ import namespace="CodeCharm.Entity.AuditFramework" #>
+
+<# 
+SchemaDataSet schemaDataSet = _params.SchemaDataSet;
+SchemaDataSet.SchemaPrimaryKeysDataTable primaryKeysTable = schemaDataSet.SchemaPrimaryKeys;
+EnumerableRowCollection<SchemaDataSet.SchemaPrimaryKeysRow> primaryKeysRows = primaryKeysTable.AsEnumerable();
+var primaryKeysQuery = from primaryKeysRow in primaryKeysRows
+                       where primaryKeysRow.TABLE_SCHEMA.Equals(_schema, StringComparison.OrdinalIgnoreCase)
+                       where primaryKeysRow.TABLE_NAME.Equals(_tableName, StringComparison.OrdinalIgnoreCase)
+                       select primaryKeysRow;
+#>
+IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[<#= _params.AuditingSchema #>].[<#= _trackingTableName #>]') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+BEGIN
+	CREATE TABLE [<#= _params.AuditingSchema #>].[<#= _trackingTableName #>]
+		(
+    	  [TrackºId] [bigint]
+<# foreach (SchemaDataSet.ColumnsRow columnsRow in _targetTableColumns) { #>
+		, [<#= columnsRow.COLUMN_NAME #>] <#= columnsRow.DATA_TYPE.ToUpperInvariant() #><#= SchemaHelper.DataTypeDetail(columnsRow) #> NULL
+<# } #>
+
+		, CONSTRAINT [PK_<#= _trackingTableName #>_TrackºId] PRIMARY KEY CLUSTERED 
+			(
+				[TrackºId] ASC
+			)
+			ON [<#= _params.AuditingFileGroup #>]
+			
+		, CONSTRAINT [FK_<#= _trackingTableName #>_AuditMaster] FOREIGN KEY
+			(
+				[TrackºId]
+			) 
+			REFERENCES [<#= _params.AuditingSchema #>].[AuditMaster]
+			(
+				[TrackºId]
+			) 
+			ON UPDATE CASCADE 
+	 		ON DELETE CASCADE 	 
+	 	)
+		ON [<#= _params.AuditingFileGroup #>];
+
+	CREATE NONCLUSTERED INDEX [IX_<#= _trackingTableName #>_PK] ON [<#= _params.AuditingSchema #>].[<#= _trackingTableName #>] 
+	(
+<# 
+bool first = true;
+PushIndent("        ");
+foreach (SchemaDataSet.SchemaPrimaryKeysRow primaryKeysRow in primaryKeysQuery)
+{
+	if (!first) 
+	{ 
+		Write(", ");
+	} 
+	WriteLine("[" + primaryKeysRow.COLUMN_NAME + "] ASC");
+	first = false;
+} 
+PopIndent();
+#>
+	)
+	INCLUDE 
+	(
+		[TrackºId]
+	) 
+	WITH 
+	(
+	  STATISTICS_NORECOMPUTE = OFF
+	, SORT_IN_TEMPDB = OFF
+	, IGNORE_DUP_KEY = OFF
+	, DROP_EXISTING = OFF
+	, ONLINE = OFF
+	, ALLOW_ROW_LOCKS = ON
+	, ALLOW_PAGE_LOCKS = ON
+	)
+	ON [<#= _params.AuditingFileGroup #>];
+
+END
+GO

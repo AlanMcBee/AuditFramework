@@ -1,0 +1,22 @@
+﻿<#@ template language="C#" #>
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= _params.AuditingSchema #>].[SessionTransaction]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [<#= _params.AuditingSchema #>].[SessionTransaction]
+        (
+          [SessionId]       SMALLINT            NOT NULL
+        , [ActiveSequence]  BIGINT              NOT NULL
+        , [Depth]           INT                 NOT NULL
+        , [User_Name]       SYSNAME             NULL
+        , [Host_Name]       SYSNAME             NULL
+        , [App_Name]        SYSNAME             NULL
+        , [LastUpdatedUtc]  DATETIME            NOT NULL
+        
+        , CONSTRAINT [PK_SessionTransaction_SessionId] PRIMARY KEY CLUSTERED 
+            (
+              [SessionId] ASC
+            ) 
+            ON [<#= _params.AuditingFileGroup #>]
+        ) 
+        ON [<#= _params.AuditingFileGroup #>];
+END
+GO

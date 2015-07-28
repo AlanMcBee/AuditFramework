@@ -1,0 +1,31 @@
+﻿<#@ template language="C#" #>
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= _params.AuditingSchema #>].[Catalog]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [<#= _params.AuditingSchema #>].[Catalog] 
+        (
+          [Id]                  INT     IDENTITY (1, 1) NOT NULL
+        , [AuditedSchema]       SYSNAME                 NOT NULL
+        , [AuditedTableName]    SYSNAME                 NOT NULL
+        , [Version]             INT                     NOT NULL
+        , [AuditingTableName]   SYSNAME                 NOT NULL
+        , [Archived]            BIT                     NOT NULL
+        
+        , CONSTRAINT [PK_Catalog] PRIMARY KEY CLUSTERED 
+            (
+              [Id]
+            ) 
+        ON [<#= _params.AuditingFileGroup #>] 
+        )
+        ON [<#= _params.AuditingFileGroup #>]
+
+    CREATE  UNIQUE  INDEX [IX_Catalog_SchemaTableNameVersion] 
+        ON [<#= _params.AuditingSchema #>].[Catalog]
+        ([AuditedSchema], [AuditedTableName], [Version]) 
+        ON [<#= _params.AuditingFileGroup #>]
+
+    CREATE  UNIQUE  INDEX [IX_Catalog_AuditingTableName] 
+        ON [<#= _params.AuditingSchema #>].[Catalog]
+        ([AuditingTableName]) 
+        ON [<#= _params.AuditingFileGroup #>]
+END
+GO

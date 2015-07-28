@@ -1,0 +1,14 @@
+﻿<#@ template language="C#" #>
+<# foreach (string executeGrantee in _params.ExecuteGrantees) 
+{ #>
+GRANT EXECUTE ON [<#= _params.AuditingSchema #>].[CurrentTransactionSequence] TO <#= executeGrantee #>;
+GO
+
+GRANT EXECUTE ON [<#= _params.AuditingSchema #>].[ReleaseTransactionSequence] TO <#= executeGrantee #>;
+GO
+
+GRANT EXECUTE ON [<#= _params.AuditingSchema #>].[RequestTransactionSequence] TO <#= executeGrantee #>;
+GO
+
+<# 
+} #>

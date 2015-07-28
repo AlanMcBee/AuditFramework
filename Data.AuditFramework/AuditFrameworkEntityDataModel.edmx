@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AuditFramework_Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="AuditFramework_ModelStoreContainer">
+          <EntitySet Name="ActionCodes" EntityType="AuditFramework_Model.Store.ActionCodes" store:Type="Tables" Schema="db_audit" />
+          <EntitySet Name="Catalog" EntityType="AuditFramework_Model.Store.Catalog" store:Type="Tables" Schema="db_audit" />
+        </EntityContainer>
+        <EntityType Name="ActionCodes">
+          <Key>
+            <PropertyRef Name="ActionCode" />
+          </Key>
+          <Property Name="ActionCode" Type="nchar" Nullable="false" MaxLength="1" />
+          <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="16" />
+        </EntityType>
+        <EntityType Name="Catalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AuditedSchema" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="AuditedTableName" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="Version" Type="int" Nullable="false" />
+          <Property Name="AuditingTableName" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="Archived" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'MtfCapability_INT.db_audit.PrimaryKeys' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AuditFrameworkModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="AuditFrameworkEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ActionCodes" EntityType="AuditFrameworkModel.ActionCode" />
+          <EntitySet Name="Catalogs" EntityType="AuditFrameworkModel.Catalog" />
+        </EntityContainer>
+        <EntityType Name="ActionCode">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="1" Unicode="true" FixedLength="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="16" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Catalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AuditedSchema" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="AuditedTableName" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="Version" Type="Int32" Nullable="false" />
+          <Property Name="AuditingTableName" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="Archived" Type="Boolean" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AuditFramework_ModelStoreContainer" CdmEntityContainer="AuditFrameworkEntities">
+          <EntitySetMapping Name="ActionCodes"><EntityTypeMapping TypeName="AuditFrameworkModel.ActionCode"><MappingFragment StoreEntitySet="ActionCodes">
+            <ScalarProperty Name="Code" ColumnName="ActionCode" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Catalogs"><EntityTypeMapping TypeName="AuditFrameworkModel.Catalog"><MappingFragment StoreEntitySet="Catalog">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="AuditedSchema" ColumnName="AuditedSchema" />
+            <ScalarProperty Name="AuditedTableName" ColumnName="AuditedTableName" />
+            <ScalarProperty Name="Version" ColumnName="Version" />
+            <ScalarProperty Name="AuditingTableName" ColumnName="AuditingTableName" />
+            <ScalarProperty Name="Archived" ColumnName="Archived" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="AuditFrameworkEntityDataModel">
+        <EntityTypeShape EntityType="AuditFrameworkModel.ActionCode" Width="1.5" PointX="0.75" PointY="0.75" Height="1.2205309810241065" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuditFrameworkModel.Catalog" Width="1.5" PointX="2.75" PointY="0.75" Height="1.843455765843391" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

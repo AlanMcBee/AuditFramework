@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{CF262341-C81F-4E0F-A1B1-A40E0EFA608E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CodeCharm.Model.AuditFramework</RootNamespace>
+    <AssemblyName>Model.AuditFramework</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\Solutions\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\Model.AuditFramework.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GenerateAuditingBase.cs" />
+    <Compile Include="GenerateDatabaseFiles.cs" />
+    <Compile Include="GenerateSchemaAudit.cs" />
+    <Compile Include="GenerateDelta.cs" />
+    <Compile Include="GenerateTableAudit.cs" />
+    <Compile Include="GenerateTableTracking.cs" />
+    <Compile Include="Generator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportProgressEventArgs.cs" />
+    <Compile Include="SchemaHelper.cs" />
+    <Compile Include="T4Templates\CreateInstantTrackIdProcedure.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateInstantTrackIdProcedure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateInstantTrackIdProcedure.my.cs">
+      <DependentUpon>CreateInstantTrackIdProcedure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateUpdateDeltaPriorTableProcedure.cs">
+      <DependentUpon>CreateUpdateDeltaPriorTableProcedure.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="T4Templates\CreateUpdateDeltaPriorTableProcedure.my.cs">
+      <DependentUpon>CreateUpdateDeltaPriorTableProcedure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateActionCodesTable.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateActionCodesTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateActionCodesTable.my.cs">
+      <DependentUpon>CreateActionCodesTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateAuditMasterTable.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateAuditMasterTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateAuditingTable.my.cs">
+      <DependentUpon>CreateAuditMasterTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateBuildDeltaProcedure.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateBuildDeltaProcedure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateBuildDeltaProcedure.my.cs">
+      <DependentUpon>CreateBuildDeltaProcedure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateCatalogTable.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateCatalogTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateCatalogTable.my.cs">
+      <DependentUpon>CreateCatalogTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateCurrentTransactionSequenceProcedure.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateCurrentTransactionSequenceProcedure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateCurrentTransactionSequenceProcedure.my.cs">
+      <DependentUpon>CreateCurrentTransactionSequenceProcedure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateDeltaTable.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateDeltaTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateDeltaTable.my.cs">
+      <DependentUpon>CreateDeltaTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateReleaseTransactionSequenceProcedure.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateReleaseTransactionSequenceProcedure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateReleaseTransactionSequenceProcedure.my.cs">
+      <DependentUpon>CreateReleaseTransactionSequenceProcedure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateRequestTransactionSequenceProcedure.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateRequestTransactionSequenceProcedure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateRequestTransactionSequenceProcedure.my.cs">
+      <DependentUpon>CreateRequestTransactionSequenceProcedure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateSessionTransactionTable.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateSessionTransactionTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateSessionTransactionTable.my.cs">
+      <DependentUpon>CreateSessionTransactionTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateTrackingInsertProcedure.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateTrackingInsertProcedure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateTrackingInsertProcedure.my.cs">
+      <DependentUpon>CreateTrackingInsertProcedure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateTrackingTable.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateTrackingTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateTrackingTable.my.cs">
+      <DependentUpon>CreateTrackingTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateTransactionSequenceTable.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateTransactionSequenceTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateTransactionSequenceTable.my.cs">
+      <DependentUpon>CreateTransactionSequenceTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateTrigger.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateTrigger.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateTrigger.my.cs">
+      <DependentUpon>CreateTrigger.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateUpdateDeltaTableProcedure.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateUpdateDeltaTableProcedure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\CreateUpdateDeltaTableProcedure.my.cs">
+      <DependentUpon>CreateUpdateDeltaTableProcedure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\GrantExecuteToTransactionSequenceProcedures.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GrantExecuteToTransactionSequenceProcedures.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\GrantExecuteToTransactionSequenceProcedures.my.cs">
+      <DependentUpon>GrantExecuteToTransactionSequenceProcedures.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\InsertCatalog.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InsertCatalog.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\InsertCatalog.my.cs">
+      <DependentUpon>InsertCatalog.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\SetBaseline.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SetBaseline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\SetBaseline.my.cs">
+      <DependentUpon>SetBaseline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\SetupDatabase.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SetupDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4Templates\SetupDatabase.my.cs">
+      <DependentUpon>SetupDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrackingTable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="T4Templates\CreateInstantTrackIdProcedure.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateInstantTrackIdProcedure.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\CreateUpdateDeltaPriorTableProcedure.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateUpdateDeltaPriorTableProcedure.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\CreateActionCodesTable.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateActionCodesTable.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\CreateAuditMasterTable.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateAuditMasterTable.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\CreateBuildDeltaProcedure.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateBuildDeltaProcedure.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\CreateCatalogTable.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateCatalogTable.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\CreateCurrentTransactionSequenceProcedure.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateCurrentTransactionSequenceProcedure.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\CreateDeltaTable.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateDeltaTable.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\CreateReleaseTransactionSequenceProcedure.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateReleaseTransactionSequenceProcedure.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\CreateRequestTransactionSequenceProcedure.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateRequestTransactionSequenceProcedure.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\CreateSessionTransactionTable.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateSessionTransactionTable.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\CreateTrackingInsertProcedure.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateTrackingInsertProcedure.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\CreateTrackingTable.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateTrackingTable.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\CreateTransactionSequenceTable.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateTransactionSequenceTable.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\CreateTrigger.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateTrigger.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\CreateUpdateDeltaTableProcedure.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateUpdateDeltaTableProcedure.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\GrantExecuteToTransactionSequenceProcedures.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>GrantExecuteToTransactionSequenceProcedures.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\InsertCatalog.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>InsertCatalog.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\SetBaseline.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>SetBaseline.cs</LastGenOutput>
+    </None>
+    <None Include="T4Templates\SetupDatabase.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>SetupDatabase.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data.AuditFramework\Data.AuditFramework.csproj">
+      <Project>{cb6317a5-d4ac-4455-80f1-154849935dc8}</Project>
+      <Name>Data.AuditFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entity.AuditFramework\Entity.AuditFramework.csproj">
+      <Project>{21883c10-a43f-40da-90ba-8c8550b7f625}</Project>
+      <Name>Entity.AuditFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="..\CodeCharm.Foundation.csproj" />
+  <PropertyGroup>
+    <PostBuildEvent />
+  </PropertyGroup>
+</Project>

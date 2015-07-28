@@ -1,0 +1,24 @@
+﻿<#@ template language="C#" #>
+<#@ output extension="sql" #>
+
+USE [<#= _params.DatabaseName #>]
+GO
+
+ALTER DATABASE [<#= _params.DatabaseName #>] 
+	ADD FILEGROUP [<#= _params.AuditingFileGroup #>]
+GO
+
+ALTER DATABASE [<#= _params.DatabaseName #>] 
+	ADD FILE
+	(
+	  NAME = N'<#= _params.DatabaseName #>_audit'
+	, FILENAME = N'<#= _params.SqlFilePath.FullName #>\\<#= _params.DatabaseName #>_audit.ndf' 
+	, SIZE = 2
+	, FILEGROWTH = 10%
+	) 
+	TO FILEGROUP [<#= _params.AuditingFileGroup #>]
+GO
+
+IF NOT EXISTS (SELECT * FROM dbo.sysusers WHERE name = N'<#= _params.AuditingSchema #>')
+	EXEC sp_addrole N'<#= _params.AuditingSchema #>'
+GO
