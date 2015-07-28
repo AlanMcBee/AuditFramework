@@ -35,7 +35,7 @@ namespace CodeCharm.Model.AuditFramework
             {
                 if (!columnsRow.IsCHARACTER_MAXIMUM_LENGTHNull())
                 {
-                    dataTypeStringBuilder.AppendFormat("({0})", columnsRow.CHARACTER_MAXIMUM_LENGTH);
+                    dataTypeStringBuilder.AppendFormat("({0})", columnsRow.CHARACTER_MAXIMUM_LENGTH == -1 ? "MAX" : columnsRow.CHARACTER_MAXIMUM_LENGTH.ToString());
                 }
                 else
                 {
