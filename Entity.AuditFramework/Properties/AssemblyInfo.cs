@@ -18,5 +18,3 @@ using System.Runtime.InteropServices;
 [assembly: Guid("d56a8575-480b-41f7-9683-8a5b18667776")]
 
 [assembly: CLSCompliant(true)]
-[assembly: AssemblyCompanyAttribute("Code Charm")]
-[assembly: AssemblyCopyrightAttribute("Copyright © 2015 Alan McBee")]

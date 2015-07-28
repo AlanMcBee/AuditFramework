@@ -9,6 +9,3 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("Utility")]
 [assembly: AssemblyDescription("Helper classes for .NET Base Class Library")]
 [assembly: AssemblyCulture("")]
-
-[assembly: AssemblyCompanyAttribute("Code Charm")]
-[assembly: AssemblyCopyrightAttribute("Copyright © 2015 Alan McBee")]
