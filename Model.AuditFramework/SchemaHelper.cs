@@ -13,6 +13,7 @@ namespace CodeCharm.Model.AuditFramework
                                                                     {
                                                                         "int",
                                                                         "bit",
+                                                                        "date",
                                                                         "datetime",
                                                                         "bigint",
                                                                         "smallint",

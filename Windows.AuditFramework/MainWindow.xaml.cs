@@ -105,7 +105,7 @@ namespace CodeCharm.Windows.AuditFramework
             };
             parameters.ColumnsNotAudited.AddRange(new[] { "", "" });
             parameters.ExecuteGrantees.AddRange(ExecuteGranteesTextBox.Text.Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
-            parameters.SchemasToAudit.AddRange(SchemasToAuditTextBox.Text.Trim().Split('\n'));
+            parameters.SchemasToAudit.AddRange(SchemasToAuditTextBox.Text.Trim().Split('\n', ' '));
             parameters.TablesNotAudited.AddRange(TablesNotAuditedTextBox.Text.Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
             parameters.ColumnsNotAudited.AddRange(ColumnsNotAuditedTextBox.Text.Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
 
