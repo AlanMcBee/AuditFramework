@@ -6,8 +6,8 @@
         x:Class="CodeCharm.Windows.AuditFramework.MainWindow"
         SnapsToDevicePixels="True"
         Title="MainWindow"
-        Height="600"
-        Width="800">
+        Height="768 "
+        Width="1024">
     <Window.CommandBindings>
         <CommandBinding Command="Open"
                         Executed="OpenCommand_Executed"
