@@ -11,6 +11,8 @@ var primaryKeysQuery = from primaryKeysRow in primaryKeysRows
                        where primaryKeysRow.TABLE_SCHEMA.Equals(_schema, StringComparison.OrdinalIgnoreCase)
                        where primaryKeysRow.TABLE_NAME.Equals(_auditedTable, StringComparison.OrdinalIgnoreCase)
                        select primaryKeysRow;
+var schemaTableName = _schema + "º" + _auditedTable;
+var transactionName = schemaTableName.Length > 32 ? schemaTableName.Substring(0,32) : schemaTableName;
 #>
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= _params.AuditingSchema #>].[Trackº<#= _schema #>º<#= _auditedTable #>]') AND type IN (N'P', N'PC'))
     DROP PROCEDURE [<#= _params.AuditingSchema #>].[Trackº<#= _schema #>º<#= _auditedTable #>];
@@ -51,7 +53,7 @@ BEGIN
 
 	BEGIN TRY
 	    BEGIN TRANSACTION;
-	    SAVE TRANSACTION <#= _schema #>º<#= _auditedTable #>;
+	    SAVE TRANSACTION <#= transactionName #>;
 
 	    DECLARE @AuditºTransactionSequenceInt       [BIGINT];
 	    DECLARE @AuditºIsLocalTransactionSequence   [BIT];
@@ -203,7 +205,7 @@ BEGIN
 
 		IF XACT_STATE() = -1 -- uncommittable
 		BEGIN
-			ROLLBACK TRANSACTION <#= _schema #>º<#= _auditedTable #>;
+			ROLLBACK TRANSACTION <#= transactionName #>;
 		END;
 		
 		IF XACT_STATE() = 1 -- committable

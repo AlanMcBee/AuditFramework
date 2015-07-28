@@ -16,7 +16,7 @@ SET NOCOUNT ON;
 
 BEGIN TRY
 	BEGIN TRANSACTION;
-	SAVE TRANSACTION <#= _schema #>º<#= _tableName #>;
+	SAVE TRANSACTION <#= _params.AuditingSchema #>ºBuildDelta;
 
 	DECLARE @TrackºId 					[BIGINT];
 	DECLARE @AuditºTimeStampUtc 		[DATETIME];

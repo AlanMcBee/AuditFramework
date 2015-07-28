@@ -45,20 +45,14 @@ var primaryKeysQuery = from primaryKeysRow in primaryKeysRows
             this.Write("\r\nSET NOCOUNT ON;\r\n\r\nBEGIN TRY\r\n\tBEGIN TRANSACTION;\r\n\tSAVE TRANSACTION ");
             
             #line 19 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\SetBaseline.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(_schema));
+            this.Write(this.ToStringHelper.ToStringWithCulture(_params.AuditingSchema));
             
             #line default
             #line hidden
-            this.Write("º");
-            
-            #line 19 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\SetBaseline.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
-            
-            #line default
-            #line hidden
-            this.Write(";\r\n\r\n\tDECLARE @TrackºId \t\t\t\t\t[BIGINT];\r\n\tDECLARE @AuditºTimeStampUtc \t\t[DATETIME]" +
-                    ";\r\n\tDECLARE @AuditºTransactionSequence  [BIGINT];\r\n\tDECLARE @AuditºTransactionDe" +
-                    "pth     [INT];\r\n\tDECLARE @BaselineºCounter \t\t\t[BIGINT];\r\n\r\n\tEXECUTE [");
+            this.Write("ºBuildDelta;\r\n\r\n\tDECLARE @TrackºId \t\t\t\t\t[BIGINT];\r\n\tDECLARE @AuditºTimeStampUtc \t" +
+                    "\t[DATETIME];\r\n\tDECLARE @AuditºTransactionSequence  [BIGINT];\r\n\tDECLARE @AuditºTr" +
+                    "ansactionDepth     [INT];\r\n\tDECLARE @BaselineºCounter \t\t\t[BIGINT];\r\n\r\n\tEXECUTE [" +
+                    "");
             
             #line 27 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\SetBaseline.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_params.AuditingSchema));

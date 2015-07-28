@@ -39,69 +39,71 @@ var primaryKeysQuery = from primaryKeysRow in primaryKeysRows
                        where primaryKeysRow.TABLE_SCHEMA.Equals(_schema, StringComparison.OrdinalIgnoreCase)
                        where primaryKeysRow.TABLE_NAME.Equals(_auditedTable, StringComparison.OrdinalIgnoreCase)
                        select primaryKeysRow;
+var schemaTableName = _schema + "º" + _auditedTable;
+var transactionName = schemaTableName.Length > 32 ? schemaTableName.Substring(0,32) : schemaTableName;
 
             
             #line default
             #line hidden
             this.Write("IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N\'[");
             
-            #line 15 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 17 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_params.AuditingSchema));
             
             #line default
             #line hidden
             this.Write("].[Trackº");
             
-            #line 15 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 17 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_schema));
             
             #line default
             #line hidden
             this.Write("º");
             
-            #line 15 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 17 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_auditedTable));
             
             #line default
             #line hidden
             this.Write("]\') AND type IN (N\'P\', N\'PC\'))\r\n    DROP PROCEDURE [");
             
-            #line 16 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 18 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_params.AuditingSchema));
             
             #line default
             #line hidden
             this.Write("].[Trackº");
             
-            #line 16 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 18 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_schema));
             
             #line default
             #line hidden
             this.Write("º");
             
-            #line 16 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 18 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_auditedTable));
             
             #line default
             #line hidden
             this.Write("];\r\nGO\r\n\r\nCREATE PROCEDURE [");
             
-            #line 19 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 21 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_params.AuditingSchema));
             
             #line default
             #line hidden
             this.Write("].[Trackº");
             
-            #line 19 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 21 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_schema));
             
             #line default
             #line hidden
             this.Write("º");
             
-            #line 19 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 21 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_auditedTable));
             
             #line default
@@ -116,7 +118,7 @@ var primaryKeysQuery = from primaryKeysRow in primaryKeysRows
 
 ");
             
-            #line 27 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 29 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
  foreach (SchemaDataSet.SchemaPrimaryKeysRow primaryKeysRow in primaryKeysQuery)
 {   
             
@@ -124,21 +126,21 @@ var primaryKeysQuery = from primaryKeysRow in primaryKeysRows
             #line hidden
             this.Write(", @");
             
-            #line 29 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 31 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(primaryKeysRow.COLUMN_NAME));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 29 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 31 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(SchemaHelper.DataTypeWithDetail(primaryKeysRow, schemaDataSet.Columns)));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 30 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 32 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
  
 }   
             
@@ -168,15 +170,8 @@ BEGIN
 	    BEGIN TRANSACTION;
 	    SAVE TRANSACTION ");
             
-            #line 54 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(_schema));
-            
-            #line default
-            #line hidden
-            this.Write("º");
-            
-            #line 54 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(_auditedTable));
+            #line 56 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(transactionName));
             
             #line default
             #line hidden
@@ -192,7 +187,7 @@ BEGIN
 	    BEGIN
 	        EXECUTE [");
             
-            #line 64 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 66 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_params.AuditingSchema));
             
             #line default
@@ -209,7 +204,7 @@ BEGIN
 	    
 	    INSERT INTO [");
             
-            #line 74 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 76 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_params.AuditingSchema));
             
             #line default
@@ -235,21 +230,21 @@ BEGIN
 	    , @AuditºAction
 	    , '[");
             
-            #line 93 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 95 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_schema));
             
             #line default
             #line hidden
             this.Write("].[");
             
-            #line 93 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 95 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_auditedTable));
             
             #line default
             #line hidden
             this.Write("]\'\r\n\t    , \'");
             
-            #line 94 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 96 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_trackingTableName));
             
             #line default
@@ -269,21 +264,21 @@ BEGIN
 	    BEGIN
 	        INSERT INTO [");
             
-            #line 107 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 109 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_params.AuditingSchema));
             
             #line default
             #line hidden
             this.Write("].[");
             
-            #line 107 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 109 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_trackingTableName));
             
             #line default
             #line hidden
             this.Write("]\r\n\t            (\r\n\t              [TrackºId]\r\n\t");
             
-            #line 110 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 112 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
  foreach(SchemaDataSet.ColumnsRow columnsRow in _targetTableColumns)
 	{   
             
@@ -291,14 +286,14 @@ BEGIN
             #line hidden
             this.Write("\t            , [");
             
-            #line 112 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 114 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(columnsRow.COLUMN_NAME));
             
             #line default
             #line hidden
             this.Write("]\r\n\t");
             
-            #line 113 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 115 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
  
 	}   
             
@@ -306,7 +301,7 @@ BEGIN
             #line hidden
             this.Write("\t            )\r\n\t            VALUES\r\n\t            (\r\n\t              @TrackºId\r\n\t");
             
-            #line 119 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 121 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
  
 	PushIndent("            ");
 	foreach(SchemaDataSet.ColumnsRow columnsRow in _targetTableColumns)
@@ -328,21 +323,21 @@ BEGIN
             #line hidden
             this.Write("\t            );\r\n\t    END\r\n\t    ELSE\r\n\t    BEGIN\r\n\t        INSERT INTO [");
             
-            #line 139 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 141 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_params.AuditingSchema));
             
             #line default
             #line hidden
             this.Write("].[");
             
-            #line 139 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 141 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_trackingTableName));
             
             #line default
             #line hidden
             this.Write("]\r\n\t            (\r\n\t              [TrackºId]\r\n\t");
             
-            #line 142 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 144 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
  foreach(SchemaDataSet.ColumnsRow columnsRow in _targetTableColumns)
 	{   
             
@@ -350,14 +345,14 @@ BEGIN
             #line hidden
             this.Write("\t            , [");
             
-            #line 144 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 146 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(columnsRow.COLUMN_NAME));
             
             #line default
             #line hidden
             this.Write("]\r\n\t");
             
-            #line 145 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 147 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
  
 	}   
             
@@ -365,7 +360,7 @@ BEGIN
             #line hidden
             this.Write("\t            )\r\n\t            SELECT  \r\n\t                      @TrackºId\r\n\t");
             
-            #line 150 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 152 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
  foreach(SchemaDataSet.ColumnsRow columnsRow in _targetTableColumns)
 	{   
             
@@ -373,14 +368,14 @@ BEGIN
             #line hidden
             this.Write("\t                    , [");
             
-            #line 152 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 154 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(columnsRow.COLUMN_NAME));
             
             #line default
             #line hidden
             this.Write("]\r\n\t");
             
-            #line 153 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 155 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
  
 	}   
             
@@ -388,21 +383,21 @@ BEGIN
             #line hidden
             this.Write("\t                FROM    [");
             
-            #line 155 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 157 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_schema));
             
             #line default
             #line hidden
             this.Write("].[");
             
-            #line 155 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 157 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_auditedTable));
             
             #line default
             #line hidden
             this.Write("]\r\n\t                WHERE\r\n\t-- primary key values match arguments\r\n\t");
             
-            #line 158 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 160 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
  
 	PushIndent("                    ");
 	bool first = true;
@@ -427,7 +422,7 @@ BEGIN
             this.Write("\t\t\t\t\t;\r\n\t\t\t\t\r\n\t    END;\r\n\t    \r\n\t    IF @AuditºIsLocalTransactionSequence <> 0\r\n\t" +
                     "    BEGIN\r\n\t        EXECUTE [");
             
-            #line 181 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            #line 183 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_params.AuditingSchema));
             
             #line default
@@ -459,15 +454,8 @@ BEGIN
 		BEGIN
 			ROLLBACK TRANSACTION ");
             
-            #line 206 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(_schema));
-            
-            #line default
-            #line hidden
-            this.Write("º");
-            
-            #line 206 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(_auditedTable));
+            #line 208 "C:\Users\mcbeea\Desktop\AuditFramework\Model.AuditFramework\T4Templates\CreateTrackingInsertProcedure.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(transactionName));
             
             #line default
             #line hidden
