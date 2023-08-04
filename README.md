@@ -1,3 +1,7 @@
+# Archived on 2023-08-04
+There are already features built into SQL Server to capture changes to data. This repo was originally meant to solve a problem that I no longer have.
+
+---
 # AuditFramework
 General purpose data change tracking for SQL Server
 
